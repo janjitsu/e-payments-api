@@ -11,6 +11,9 @@
     "psr/simple-cache": {
         "version": "1.0.1"
     },
+    "symfony/browser-kit": {
+        "version": "v4.1.1"
+    },
     "symfony/cache": {
         "version": "v4.1.1"
     },
@@ -30,6 +33,9 @@
         "version": "v4.1.1"
     },
     "symfony/dependency-injection": {
+        "version": "v4.1.1"
+    },
+    "symfony/dom-crawler": {
         "version": "v4.1.1"
     },
     "symfony/dotenv": {
