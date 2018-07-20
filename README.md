@@ -5,3 +5,22 @@ Status](https://circleci.com/gh/janjitsu/e-payments-api/tree/master.png?style=sh
 
 Backend api for [e-payments](https://github.com/glauroqj/e-payments)
 
+---
+
+## Running
+
+### Start containers
+```
+$ docker-compose up -d
+```
+
+### Install packages
+```
+$ docker exec -t epayments-fpm composer install
+```
+
+### Running tests
+```
+$ docker exec -t epayments-fpm bin/phpunit
+```
+
