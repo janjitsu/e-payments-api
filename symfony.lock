@@ -1,4 +1,7 @@
 {
+    "pagseguro/pagseguro-php-sdk": {
+        "version": "4.2.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
