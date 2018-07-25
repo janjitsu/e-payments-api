@@ -1,3 +1,6 @@
 index:
     path: /
     controller: App\Controller\DefaultController::index
+pagseguro_session:
+    path: /pagseguro/session
+    controller: App\Controller\PagseguroController::getSessionId
