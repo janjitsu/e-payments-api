@@ -26,7 +26,7 @@ class PagSeguroController extends Controller
 
             return new JsonResponse(['sessionId' => $sessionCode->getResult()]);
         } catch (Exception $e) {
-            die($e->getMessage());
+            return new JsonResponse(['error' => $e->getMessage()],400);
         }
     }
 }

@@ -3,4 +3,4 @@ index:
     controller: App\Controller\DefaultController::index
 pagseguro_session:
     path: /pagseguro/session
-    controller: App\Controller\PagseguroController::getSessionId
+    controller: App\Controller\PagSeguroController::getSessionId
