@@ -15,13 +15,6 @@ jobs:
 
     working_directory: ~/repo
     environment:
-        PAGSEGURO_ENV: $PAGSEGURO_ENV
-        PAGSEGURO_EMAIL: $PAGSEGURO_EMAIL
-        PAGSEGURO_TOKEN_SANDBOX: $PAGSEGURO_TOKEN_SANDBOX
-        PAGSEGURO_APP_ID_SANDBOX: $PAGSEGURO_APP_ID_SANDBOX
-        PAGSEGURO_APP_KEY_SANDBOX: $PAGSEGURO_APP_KEY_SANDBOX
-        PAGSEGURO_CHARSET: $PAGSEGURO_CHARSET
-        PAGSEGURO_LOG_ACTIVE: $PAGSEGURO_LOG_ACTIVE
 
     steps:
       - checkout
@@ -40,5 +33,13 @@ jobs:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
 
+      # add environment variables
+      - run: " export PAGSEGURO_ENV=$PAGSEGURO_ENV  && \
+               export PAGSEGURO_EMAIL=$PAGSEGURO_EMAIL && \
+               export PAGSEGURO_TOKEN_SANDBOX=$PAGSEGURO_TOKEN_SANDBOX && \
+               export PAGSEGURO_APP_ID_SANDBOX=$PAGSEGURO_APP_ID_SANDBOX && \
+               export PAGSEGURO_APP_KEY_SANDBOX=$PAGSEGURO_APP_KEY_SANDBOX && \
+               export PAGSEGURO_CHARSET=$PAGSEGURO_CHARSET && \
+               export PAGSEGURO_LOG_ACTIVE=$PAGSEGURO_LOG_ACTIVE"
       # run tests!
       - run: bin/phpunit
