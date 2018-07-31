@@ -17,6 +17,9 @@ class PagSeguroController extends Controller
         PagSeguroLibrary::moduleVersion()->setName("Nome")->setRelease("1.0.0");
     }
 
+    /*
+     *path: /pagseguro/session
+     */
     public function getSessionId() : JsonResponse
     {
         try {
