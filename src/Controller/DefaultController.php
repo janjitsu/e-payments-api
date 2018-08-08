@@ -7,8 +7,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DefaultController extends Controller
 {
-    public function index() : JsonResponse
+    /**
+     * Show demo javascript  page
+     */
+    public function index()
     {
-        return new JsonResponse(['message'=>'hi']);
+        return $this->render('demo.html.twig');
     }
 }

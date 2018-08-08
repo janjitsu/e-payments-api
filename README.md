@@ -14,6 +14,11 @@ Backend api for [e-payments](https://github.com/glauroqj/e-payments)
 $ docker-compose up -d
 ```
 
+### Run demo page
+```
+http://localhost:8000
+```
+
 ### Install packages
 ```
 $ docker exec -t epayments-fpm composer install

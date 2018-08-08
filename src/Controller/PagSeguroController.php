@@ -32,4 +32,12 @@ class PagSeguroController extends Controller
             return new JsonResponse(['error' => $e->getMessage()],400);
         }
     }
+
+    /**
+     *path: /pagseguro/payment
+     **/
+    public function postPayment()
+    {
+        //gather fields and post to pagseguro
+    }
 }
