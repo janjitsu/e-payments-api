@@ -3,11 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}E-Payments API{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+      <div class="container">
         <h1>E-Payments API</h1>
         {% block body %}{% endblock %}
+        <script src="{{ asset('build/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
+      </div>
     </body>
 </html>
