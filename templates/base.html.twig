@@ -8,8 +8,13 @@
     </head>
     <body>
       <div class="container">
-        <h1>E-Payments API</h1>
+        <div class="row mt-5">
+          <h1>E-Payments API</h1>
+        </div>
         {% block body %}{% endblock %}
+        <script type="text/javascript" src=
+        "http://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js">
+        </script>
         <script src="{{ asset('build/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
       </div>

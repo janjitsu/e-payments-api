@@ -9,6 +9,29 @@
 require('../css/app.scss');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// var $ = require('jquery');
+const $ = require('jquery');
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+(function(){
+    //getSessionId
+    var senderHash;
+    console.log('getting pagseguro session');
+    $.getJSON('/pagseguro/session')
+      .then(function(data){
+        console.log(data);
+        // Set pagseguro session Id (Required)
+        PagSeguroDirectPayment.setSessionId(data.sessionId);
+
+        // Get sender hash generated from client
+        senderHash = PagSeguroDirectPayment.getSenderHash();
+        console.log(senderHash);
+      })
+      .fail(function(data){
+        alert('error');
+      });
+
+    $('#pay').click(function(){
+      alert('starting payment');
+    });
+})();
