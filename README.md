@@ -24,6 +24,12 @@ http://localhost:8000
 $ docker exec -t epayments-fpm composer install
 ```
 
+### Build asset pipeline
+```
+$ docker exec -t epayments-fpm yarn install
+$ docker exec -t epayments-fpm yarn encore dev
+```
+
 ### Running tests
 ```
 $ docker exec -t epayments-fpm bin/phpunit
