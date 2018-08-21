@@ -15,21 +15,46 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 (function(){
     //getSessionId
-    var senderHash;
+    var senderHash, creditCardParams, creditCardToken;
     console.log('getting pagseguro session');
+
+    creditCardParams = {
+        cardNumber: "5031433215406351", //cartão de crédito de teste
+        brand: "mastercard",
+        cvv: "123",
+        expirationMonth: "01",
+        expirationYear: "2021",
+        success: function(data){
+            console.log('success get credit card token')
+            console.log(data);
+        },
+        error: function(data){
+            console.log('error get credit card token')
+            console.log(data);
+        },
+        complete: function(data){
+            console.log('completed get credit card token')
+            console.log(data);
+        },
+    }
+
     $.getJSON('/pagseguro/session')
       .then(function(data){
+        console.log('success getting pagseguro session');
         console.log(data);
         // Set pagseguro session Id (Required)
         PagSeguroDirectPayment.setSessionId(data.sessionId);
+        PagSeguroDirectPayment.createCardToken(creditCardParams);
 
         // Get sender hash generated from client
         senderHash = PagSeguroDirectPayment.getSenderHash();
         console.log(senderHash);
       })
       .fail(function(data){
-        alert('error');
+          console.log('error getting pagseguro session');
+          console.log(data);
       });
+
 
     $('#pay').click(function(){
       alert('starting payment');
