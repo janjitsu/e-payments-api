@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94af3cc923faba5773551d38c1576784",
+    "content-hash": "0b7edc14f9a873e25fcc0b96560ac809",
     "packages": [
         {
             "name": "pagseguro/pagseguro-php-sdk",
