@@ -23,8 +23,6 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "composer.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
 
       - run: composer install -n --prefer-dist
 
@@ -32,6 +30,24 @@ jobs:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+
+      - run: yarn install
+
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      # build assets
+      - run:
+          name: Build assets
+          command: yarn encore dev
 
       # add environment variables
       - run: " export PAGSEGURO_ENV=$PAGSEGURO_ENV  && \
