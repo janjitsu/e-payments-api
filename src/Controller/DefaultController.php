@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class DefaultController extends Controller
 {
     /**
-     * Show demo javascript  page
+     * Show demo javascript page
      */
     public function index()
     {

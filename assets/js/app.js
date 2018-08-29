@@ -26,6 +26,8 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
         expirationYear: "2021",
         success: function(data){
             console.log('success get credit card token')
+            creditCardToken = data['card']['token'];
+            $('#creditCardToken').html(creditCardToken);
             console.log(data);
         },
         error: function(data){
@@ -49,6 +51,7 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
         // Get sender hash generated from client
         senderHash = PagSeguroDirectPayment.getSenderHash();
         console.log(senderHash);
+        $('#senderHash').html(senderHash);
       })
       .fail(function(data){
           console.log('error getting pagseguro session');
@@ -57,6 +60,17 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 
     $('#pay').click(function(){
-      alert('starting payment');
+        $.post('/pagseguro/creditCardPayment',{
+            senderHash: senderHash,
+            creditCardToken: creditCardToken
+        })
+        .then(function(data){
+            console.log('success');
+            console.log(data);
+        })
+        .fail(function(data){
+            console.log('fail');
+            console.log(data);
+        })
     });
 })();

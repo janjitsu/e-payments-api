@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use PagSeguro\Library as PagSeguroLibrary;
 use PagSeguro\Services\Session as PagSeguroSession;
 use PagSeguro\Configuration\Configure as PagSeguroConfigure;
+use PagSeguro\Domains\Requests\DirectPayment\CreditCard as PagSeguroCreditCard;
 
 class PagSeguroController extends Controller
 {
@@ -34,10 +36,113 @@ class PagSeguroController extends Controller
     }
 
     /**
-     *path: /pagseguro/payment
+     *path: /pagseguro/creditCardPayment
      **/
-    public function postPayment()
+    public function postCreditCardPayment(Request $request)
     {
         //gather fields and post to pagseguro
+        //Instantiate a new direct payment request, using Credit Card
+        $creditCard = new PagSeguroCreditCard();
+
+        /**
+         * @todo Change the receiver Email
+         */
+        $creditCard->setReceiverEmail('janfrs3@gmail.com');
+
+        // Set a reference code for this payment request. It is useful to identify this payment
+        // in future notifications.
+        $creditCard->setReference("LIBPHP000001");
+
+        // Set the currency
+        $creditCard->setCurrency("BRL");
+
+        // Add an item for this payment request
+        $creditCard->addItems()->withParameters(
+            '0001',
+            'Donation',
+            2,
+            30.00
+        );
+
+        // Set your customer information.
+        // If you using SANDBOX you must use an email @sandbox.pagseguro.com.br
+        $creditCard->setSender()->setName('João Comprador');
+        $creditCard->setSender()->setEmail('comprador@sandbox.pagseguro.com.br');
+        $creditCard->setSender()->setPhone()->withParameters(
+            11,
+            56273440
+        );
+
+        $creditCard->setSender()->setDocument()->withParameters(
+            'CPF',
+            '06361814483'
+        );
+
+        $creditCard->setSender()->setHash($request->get('senderHash'));
+
+        $creditCard->setSender()->setIp('127.0.0.0');
+
+        // Set shipping information for this payment request
+        $creditCard->setShipping()->setAddress()->withParameters(
+            'Av. Brig. Faria Lima',
+            '1384',
+            'Jardim Paulistano',
+            '01452002',
+            'São Paulo',
+            'SP',
+            'BRA',
+            'apto. 114'
+        );
+
+        //Set billing information for credit card
+        $creditCard->setBilling()->setAddress()->withParameters(
+            'Av. Brig. Faria Lima',
+            '1384',
+            'Jardim Paulistano',
+            '01452002',
+            'São Paulo',
+            'SP',
+            'BRA',
+            'apto. 114'
+        );
+
+        // Set credit card token
+        $creditCard->setToken($request->get('creditCardToken'));
+
+        // Set the installment quantity and value (could be obtained using the Installments
+        // service, that have an example here in \public\getInstallments.php)
+        $creditCard->setInstallment()->withParameters(1, '30.00');
+
+        // Set the credit card holder information
+        $creditCard->setHolder()->setBirthdate('01/10/1979');
+        $creditCard->setHolder()->setName('João Comprador'); // Equals in Credit Card
+
+        $creditCard->setHolder()->setPhone()->withParameters(
+            11,
+            56273440
+        );
+
+        $creditCard->setHolder()->setDocument()->withParameters(
+            'CPF',
+            '06361814483'
+        );
+
+        // Set the Payment Mode for this payment request
+        $creditCard->setMode('DEFAULT');
+
+        // Set a reference code for this payment request. It is useful to identify this payment
+        // in future notifications.
+
+        try {
+            //Get the crendentials and register the boleto payment
+            $result = $creditCard->register(
+                \PagSeguro\Configuration\Configure::getAccountCredentials()
+            );
+            echo "<pre>";
+            print_r($result);
+        } catch (Exception $e) {
+            echo "</br> <strong>";
+            die($e->getMessage());
+        }
     }
 }
