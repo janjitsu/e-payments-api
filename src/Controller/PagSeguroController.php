@@ -46,7 +46,6 @@ class PagSeguroController extends Controller
         //parameters
         $creditCardToken    = $request->get('creditCardToken');
         $senderHash         = $request->get('senderHash');
-        $receiverEmail      = $request->get('receiverEmail');
         $donationAmount     = $request->get('donationAmount');
 
         //billing
@@ -58,8 +57,10 @@ class PagSeguroController extends Controller
         $state              = $request->get('state');
         $complement         = $request->get('complement');
 
-        $birthDate          = $request->get('birthDate');
+        $buyerEmail         = $request->get('buyerEmail');
+        $buyerBirthDate     = $request->get('buyerBirthDate');
         $buyerName          = $request->get('buyerName');
+        $buyerCardName      = $request->get('buyerCardName');
         $buyerCPF           = $request->get('buyerCPF');
         $buyerPhone         = $request->get('buyerPhone');
 
@@ -70,7 +71,7 @@ class PagSeguroController extends Controller
         /**
          * @todo Change the receiver Email
          */
-        $creditCard->setReceiverEmail($receiverEmail);
+        $creditCard->setReceiverEmail("janfrs3@gmail.com");
 
         // Set a reference code for this payment request. It is useful to identify this payment
         // in future notifications.
@@ -89,8 +90,8 @@ class PagSeguroController extends Controller
 
         // Set your customer information.
         // If you using SANDBOX you must use an email @sandbox.pagseguro.com.br
-        $creditCard->setSender()->setName('Equale');
-        $creditCard->setSender()->setEmail('comprador@sandbox.pagseguro.com.br');
+        $creditCard->setSender()->setName($buyerName);
+        $creditCard->setSender()->setEmail($buyerEmail);
         $creditCard->setSender()->setPhone()->withParameters(
             11,
             56273440
@@ -98,7 +99,7 @@ class PagSeguroController extends Controller
 
         $creditCard->setSender()->setDocument()->withParameters(
             'CPF',
-            '06361814483'
+            $buyerCPF
         );
 
         $creditCard->setSender()->setHash($senderHash);
@@ -107,26 +108,26 @@ class PagSeguroController extends Controller
 
         // Set shipping information for this payment request
         $creditCard->setShipping()->setAddress()->withParameters(
-            'Av. Brig. Faria Lima',
-            '1384',
-            'Jardim Paulistano',
-            '01452002',
-            'São Paulo',
-            'SP',
+            $street,
+            $number,
+            $neighborhood,
+            $zipCode,
+            $city,
+            $state,
             'BRA',
-            'apto. 114'
+            $complement
         );
 
         //Set billing information for credit card
         $creditCard->setBilling()->setAddress()->withParameters(
-            'Av. Brig. Faria Lima',
-            '1384',
-            'Jardim Paulistano',
-            '01452002',
-            'São Paulo',
-            'SP',
+            $street,
+            $number,
+            $neighborhood,
+            $zipCode,
+            $city,
+            $state,
             'BRA',
-            'apto. 114'
+            $complement
         );
 
         // Set credit card token
@@ -137,8 +138,8 @@ class PagSeguroController extends Controller
         $creditCard->setInstallment()->withParameters(1, $donationAmount);
 
         // Set the credit card holder information
-        $creditCard->setHolder()->setBirthdate('01/10/1979');
-        $creditCard->setHolder()->setName('João Comprador'); // Equals in Credit Card
+        $creditCard->setHolder()->setBirthdate($buyerBirthDate);
+        $creditCard->setHolder()->setName($buyerName); // Equals in Credit Card
 
         $creditCard->setHolder()->setPhone()->withParameters(
             11,
@@ -147,7 +148,7 @@ class PagSeguroController extends Controller
 
         $creditCard->setHolder()->setDocument()->withParameters(
             'CPF',
-            '06361814483'
+            $buyerCPF
         );
 
         // Set the Payment Mode for this payment request

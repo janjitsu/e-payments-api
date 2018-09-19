@@ -61,8 +61,22 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
     $('#pay').click(function(){
         $.post('/pagseguro/creditCardPayment',{
+            creditCardToken: creditCardToken,
             senderHash: senderHash,
-            creditCardToken: creditCardToken
+            donationAmount: "1.00",
+            street: 'Av. Brig. Faria Lima',
+            number: "1384",
+            neighborhood: "Jardim Paulistano",
+            zipCode: '01452002',
+            city: "São Paulo",
+            state: "SP",
+            complement: "apto. 114",
+            buyerBirthDate: "01/10/1979",
+            buyerName: "Joao Comprador",
+            buyerCardName: "Joao Comprador",
+            buyerCPF: "66803908852",
+            buyerPhone: "1156273440",
+            buyerEmail: "joaocomprador@sandbox.pagseguro.com.br"
         })
         .then(function(data){
             console.log('success');
