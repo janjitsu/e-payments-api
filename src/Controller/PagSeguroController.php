@@ -10,6 +10,8 @@ use PagSeguro\Services\Session as PagSeguroSession;
 use PagSeguro\Services\Installment as PagSeguroInstallment;
 use PagSeguro\Configuration\Configure as PagSeguroConfigure;
 use PagSeguro\Domains\Requests\DirectPayment\CreditCard as PagSeguroCreditCard;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 
 class PagSeguroController extends Controller
 {
@@ -75,7 +77,8 @@ class PagSeguroController extends Controller
 
         // Set a reference code for this payment request. It is useful to identify this payment
         // in future notifications.
-        $creditCard->setReference("LIBPHP000001");
+        $uuid = Uuid::uuid4();
+        $creditCard->setReference($uuid->toString());
 
         // Set the currency
         $creditCard->setCurrency("BRL");
