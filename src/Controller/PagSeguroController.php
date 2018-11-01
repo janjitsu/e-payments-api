@@ -70,10 +70,7 @@ class PagSeguroController extends Controller
         //Instantiate a new direct payment request, using Credit Card
         $creditCard = new PagSeguroCreditCard();
 
-        /**
-         * @todo Change the receiver Email
-         */
-        $creditCard->setReceiverEmail("janfrs3@gmail.com");
+        $creditCard->setReceiverEmail(getenv('PAGSEGURO_RECEIVER_EMAIL'));
 
         // Set a reference code for this payment request. It is useful to identify this payment
         // in future notifications.
