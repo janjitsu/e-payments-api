@@ -24,10 +24,13 @@ class PagSeguroControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
+    /*
+     * @todo Pass post fields to pagseguro request
+     */
     public function testPostCreditCardPayment()
     {
         $client = static::createClient();
-        $client->request('GET', '/pagseguro/creditCardPayment');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $client->request('POST', '/pagseguro/creditCardPayment');
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
     }
 }
