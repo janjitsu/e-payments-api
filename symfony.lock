@@ -2,6 +2,9 @@
     "pagseguro/pagseguro-php-sdk": {
         "version": "4.2.0"
     },
+    "paragonie/random_compat": {
+        "version": "v9.99.99"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -13,6 +16,9 @@
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "ramsey/uuid": {
+        "version": "3.8.0"
     },
     "symfony/asset": {
         "version": "v4.1.3"
